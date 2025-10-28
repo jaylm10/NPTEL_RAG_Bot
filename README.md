@@ -118,4 +118,22 @@ source venv/bin/activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
+
+# Prepare the Data
+# Download all lecture transcripts and save as .txt files inside the nptel_transcripts/ folder.
+# Example: W1_L1_Intro.txt, W1_L2_History.txt, etc.
+
+# Download all weekly assignment PDFs and manually extract MCQs into questions.json with the required format.
+
+# 4. Build the FAISS vector store:
+python build_vectorstore.py
+
+# 5. Set your GROQ_API_KEY (via .env file using python-dotenv) and generate the study guide:
+python build_study_guide.py
+
+# 6. Run the Streamlit app:
+streamlit run app.py
+
+# Open your browser, enter your API key (if using the chatbot), and enjoy!
+
 ```
