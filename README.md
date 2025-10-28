@@ -137,3 +137,56 @@ streamlit run app.py
 # Open your browser, enter your API key (if using the chatbot), and enjoy!
 
 ```
+
+# 📁 Project Structure
+NPTEL-Study-Bot/
+├── faiss_index_iot/         # FAISS vector store (auto-generated)
+├── nptel_transcripts/       # Folder for all lecture transcripts (.txt)
+├── venv/                    # Virtual environment (ignored by Git)
+├── .env                     # API keys (ignored by Git)
+├── .gitignore               # Git ignore file
+├── app.py                   # Main Streamlit application
+├── build_study_guide.py     # Script to generate study_guide.json
+├── build_vectorstore.py     # Script to generate FAISS index
+├── questions.json           # Manually curated MCQs from assignments
+├── requirements.txt         # Project dependencies
+├── study_guide.json         # Auto-generated lecture summaries
+└── README.md                # This file
+
+## 📜 License & Attribution
+
+This project is intended **for educational purposes** as a study aid.
+
+- The **course content** (transcripts, assignments) belongs to **NPTEL** and respective instructors.  
+- This tool uses **publicly available NPTEL resources**, typically shared under **Creative Commons licenses** allowing **non-commercial use with attribution**.  
+- Please respect **NPTEL's terms of service**.
+
+The **code** for this project is shared under the **MIT License**.  
+*(Consider adding an `MIT License` file to your repository.)*
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! 🎉  
+
+You can:
+- 🐞 **Report bugs**
+- 💡 **Suggest new features**
+- 🚀 **Submit pull requests**
+
+Your contributions make this tool even better for future students!
+
+---
+
+## 💬 Acknowledgements
+
+Thanks to:
+- 🎓 **NPTEL & IITs** for open educational content  
+- ⚙️ **LangChain**, **FAISS**, and **Streamlit** for enabling easy AI app development  
+- 🤖 **Google Gemini** and **Groq** for providing powerful free APIs  
+
+---
+
+**Built with ❤️ to help students prepare smarter, not harder.**
+
