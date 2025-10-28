@@ -143,7 +143,7 @@ streamlit run app.py
 This project is intended **for educational purposes** as a study aid.
 
 - The **course content** (transcripts, assignments) belongs to **NPTEL** and respective instructors.
-- 
+  
 The **code** for this project is shared under the **MIT License**.
 
 ---
