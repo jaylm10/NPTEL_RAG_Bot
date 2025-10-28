@@ -68,18 +68,60 @@ study_guide_data = load_study_guide()
 question_data = load_questions()
 
 # --- 4. Main App Layout (Tabs) ---
-selected_tab = option_menu(
+
+# Define the options for the menu
+menu_options = ["Mock Test", "Chatbot", "Full Study Guide"]
+menu_icons = ["patch-check-fill", "chat-dots-fill", "book-half"]
+
+# Initialize selected_tab in session state if it doesn't exist
+if "selected_tab" not in st.session_state:
+    st.session_state.selected_tab = menu_options[0] # Default to the first option ("Mock Test")
+
+# Determine the default index based on the current session state
+try:
+    # Find the index of the currently selected tab name
+    default_tab_index = menu_options.index(st.session_state.selected_tab)
+except ValueError:
+    default_tab_index = 0 # Fallback to the first option if state is invalid
+
+# Create the option menu, explicitly setting the default index
+current_selection = option_menu(
     menu_title=None,
-    options=["Mock Test", "Chatbot", "Full Study Guide"],
-    icons=["patch-check-fill", "chat-dots-fill", "book-half"],
+    options=menu_options,
+    icons=menu_icons,
     orientation="horizontal",
-    styles={
-        "container": {"padding": "0!important", "background-color": "#fafafa"},
-        "icon": {"color": "#4B8BBE", "font-size": "20px"},
-        "nav-link": {"font-size": "18px", "text-align": "center", "margin":"0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#E0E9F1", "color": "#333"},
+    key="main_menu",
+    default_index=default_tab_index, # Explicitly set the selected tab visual
+    styles={ # Your corrected styles
+        "container": {"padding": "5px !important", "background-color": "#fafafa"},
+        "icon": {"color": "#636AF2", "font-size": "20px"},
+        "nav-link": {
+            "font-size": "16px",
+            "text-align": "center",
+            "margin":"0px",
+            "--hover-color": "#eee",
+            "padding": "10px",
+            "color": "#333333",
+            "background-color": "transparent",
+        },
+        "nav-link-selected": {
+            "background-color": "#636AF2",
+            "color": "white",
+            "font-weight": "bold",
+        },
     }
 )
+
+# --- Crucial: Update session state AFTER getting the selection ---
+# If the user clicked a different tab, update the session state variable
+# This ensures the default_index is correct on the *next* rerun
+if st.session_state.selected_tab != current_selection:
+    st.session_state.selected_tab = current_selection
+    # Rerun immediately to reflect the change and ensure the correct tab content shows
+    st.rerun() 
+
+# Use the session state variable for controlling which tab content to display
+selected_tab = st.session_state.selected_tab 
 
 # --- 5. Persistent Sidebar ---
 with st.sidebar:
@@ -90,6 +132,31 @@ with st.sidebar:
         ("Google Gemini", "Groq Llama 3"),
         help="Select which API to use. The Chatbot tab requires an API key."
     )
+    
+    # --- API Key Help Expander ---
+    with st.expander("❓ How to get a Free API Key?"):
+        if provider == "Google Gemini":
+            st.markdown(
+                """
+                1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey).
+                2. Sign in with your Google account.
+                3. Click **"Get API key"** > **"Create API key"**.
+                4. **Copy** the key & paste below.
+                """, unsafe_allow_html=True
+            )
+            #  Placeholder for image
+        elif provider == "Groq Llama 3":
+            st.markdown(
+                """
+                1. Go to [Groq Console](https://console.groq.com/keys).
+                2. Sign up (Free).
+                3. Click **"API Keys"** > **"Create API Key"**.
+                4. Name it (e.g., "nptel-bot") & **Create**.
+                5. **Copy** the key & paste below.
+                """, unsafe_allow_html=True
+            )
+            #  Placeholder for image
+    # --- END Expander ---
     
     # Initialize Session State for API Keys
     if "api_key" not in st.session_state:
